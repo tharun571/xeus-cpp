@@ -91,6 +91,9 @@ jobs:
           mv $GITHUB_WORKSPACE/README.md dist
           jupyter lite build --XeusAddon.prefix=${{ env.PREFIX }} --output-dir dist
 
+      - name: List dist directory
+        run: ls -la dist
+        
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
