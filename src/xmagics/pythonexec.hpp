@@ -18,13 +18,15 @@ namespace xcpp
     class pythonexec : public xmagic_cell
     {
     public:
+    
         XEUS_CPP_API
         void operator()(const std::string& line, const std::string& cell) override;
-    private:
-        static bool is_initalized;
-        void initialize();
 
+    private:
+
+        static bool is_initalized;
+        static void initialize();
     };
 }  // namespace xcpp
 
-#endif //XEUS_CPP_PYTHONEXEC_MAGIC_HPP
+#endif  //XEUS_CPP_PYTHONEXEC_MAGIC_HPP

@@ -8,20 +8,25 @@
 
 #include "pythonexec.hpp"
 #include "../xparser.hpp"
+#include <iostream>
 #include <string>
 
 #include "Python.h"
-
+#include "pythonrun.h"
+#include "pylifecycle.h"
 #include "clang/Interpreter/CppInterOp.h"
 
-namespace xcpp {
+namespace xcpp
+{
     bool pythonexec::is_initalized = false;
 
-    void pythonexec::operator()([[maybe_unused]] const std::string& line, const std::string& cell) {
+    void pythonexec::operator()([[maybe_unused]] const std::string& line, const std::string& cell)
+    {
 
         if (!is_initalized)
             initialize();
-        if (!is_initalized) {
+        if (!is_initalized)
+        {
             // initializing failed    
             std::cout << Cpp::EndStdStreamCapture();
             std::cerr << Cpp::EndStdStreamCapture();
@@ -43,7 +48,8 @@ namespace xcpp {
         std::cerr << Cpp::EndStdStreamCapture();
     }
 
-    void pythonexec::initialize() {
+    void pythonexec::initialize()
+    {
 #ifdef EMSCRIPTEN
         PyStatus status;
 
@@ -56,7 +62,8 @@ namespace xcpp {
         config.exec_prefix = const_cast<wchar_t*>(prefix.c_str());
 
         status = Py_InitializeFromConfig(&config);
-        if (PyStatus_Exception(status)) {
+        if (PyStatus_Exception(status))
+        {
             // TODO: initialization failed, propagate error
             PyConfig_Clear(&config);
             is_initalized = false;
@@ -67,7 +74,7 @@ namespace xcpp {
         Py_Initialize();
 #endif
 
-        PyRun_SimpleString("import sys\nsys.path.append('')"); // add current directory to PYTHONPATH
+        PyRun_SimpleString("import sys\nsys.path.append('')");  // add current directory to PYTHONPATH
 
         // // Import cppyy module
         // PyObject* cppyyModule = PyImport_ImportModule("cppyy");
@@ -83,4 +90,4 @@ namespace xcpp {
 
         is_initalized = true;
     }
-} // namespace xcpp
+}   // namespace xcpp
