@@ -54,3 +54,12 @@ Leverage the large language models to assist in your development process. Curren
 .. image:: gemini.png
 
 .. image:: ollama.png
+
+%%python
+========================
+
+This magic allows you to run Python code in a C++ kernel.
+
+- Examples
+
+.. image:: python.png
